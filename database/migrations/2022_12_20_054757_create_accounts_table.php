@@ -24,6 +24,7 @@ return new class () extends Migration {
             $table->text('summary')->nullable();
 
             $table->string('profile_url')->nullable();
+            $table->string('data_url')->nullable();
             $table->string('avatar_url')->nullable();
             $table->string('header_url')->nullable();
 

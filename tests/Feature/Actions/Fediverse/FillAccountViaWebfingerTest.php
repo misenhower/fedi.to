@@ -57,6 +57,7 @@ class FillAccountViaWebfingerTest extends TestCase
                 && $request->header('Accept') === ['application/json'];
         });
         $this->assertSame('https://example.com/users/jdoe/profile', $account->profile_url);
+        $this->assertSame('https://example.com/users/jdoe/self', $account->data_url);
 
         // Make sure the second request was sent
         Http::assertSent(function (Request $request) {

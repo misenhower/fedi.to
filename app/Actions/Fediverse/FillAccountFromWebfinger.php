@@ -12,6 +12,7 @@ class FillAccountFromWebfinger
         [$profileUrl, $dataUrl] = $this->getResource($account);
 
         $account->profile_url = $profileUrl;
+        $account->data_url = $dataUrl;
 
         $data = $this->getData($dataUrl);
 
