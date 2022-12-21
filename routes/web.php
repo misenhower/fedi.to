@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Fediverse\AccountController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -16,3 +17,5 @@ use Inertia\Inertia;
 */
 
 Route::inertia('/', 'Welcome');
+
+Route::get('@{username}@{domain}', [AccountController::class, 'show']);
