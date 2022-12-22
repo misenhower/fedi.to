@@ -96,6 +96,7 @@ const account = computed(() => updatedAccount.value || props.account);
 
 // Re-fetch the account to look for updated data
 onUnmounted(Inertia.on('navigate', async () => {
+  updatedAccount.value = null;
   let response = await fetch(`/api/accounts/${account.value.id}`);
   let { data } = await response.json();
   updatedAccount.value = data;
