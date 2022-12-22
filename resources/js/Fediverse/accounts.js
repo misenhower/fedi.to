@@ -56,3 +56,16 @@ async function getTokens(domain, code) {
     throw new Error('Error retrieving tokens');
   }
 }
+
+export async function logout(account) {
+  let client = new MastodonApi(account.domain, account.tokens.access_token);
+
+  try {
+    await client.post('oauth/revoke');
+  } catch (e) {
+    //
+  }
+
+  let index = accounts.value.indexOf(account);
+  accounts.value.splice(index, 1);
+}

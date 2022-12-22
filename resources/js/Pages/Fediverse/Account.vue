@@ -72,6 +72,9 @@
             </div>
           </div>
         </div>
+
+        <LoginBox v-if="!loggedIn" />
+        <AccountsBox v-else />
       </div>
     </div>
   </AppLayout>
@@ -88,7 +91,10 @@ import { Inertia } from '@inertiajs/inertia';
 import { Link } from '@inertiajs/inertia-vue3';
 import sanitizeHtml from 'sanitize-html';
 import { ref, computed, onUnmounted } from 'vue';
+import LoginBox from '../../Components/Fediverse/LoginBox.vue';
+import AccountsBox from '../../Components/Fediverse/AccountsBox.vue';
 import AppLayout from '../../Layouts/AppLayout.vue';
+import { accounts } from '@/Fediverse/accounts';
 
 const props = defineProps({
   account: Object,
@@ -105,7 +111,7 @@ onUnmounted(Inertia.on('navigate', async () => {
   updatedAccount.value = data;
 }));
 
-const loggedIn = ref(true);
+const loggedIn = computed(() => accounts.value.length > 0);
 const following = ref(false);
 const followLoading = ref(false);
 
