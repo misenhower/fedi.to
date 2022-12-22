@@ -1,4 +1,5 @@
 {
+    "name": "fedi.to",
     "private": true,
     "scripts": {
         "dev": "vite",
