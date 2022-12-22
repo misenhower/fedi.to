@@ -5,6 +5,10 @@ import { getServer } from './servers';
 
 export const accounts = useLocalStorage('auth/accounts', []);
 
+export function getClient(account) {
+  return new MastodonApi(account.domain, account.tokens.access_token);
+}
+
 export async function getAuthorizationUrl(domain, returnUrl) {
   let { app } = await getServer(domain);
 
@@ -58,7 +62,7 @@ async function getTokens(domain, code) {
 }
 
 export async function logout(account) {
-  let client = new MastodonApi(account.domain, account.tokens.access_token);
+  let client = getClient(account);
 
   try {
     await client.post('oauth/revoke');

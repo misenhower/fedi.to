@@ -90,11 +90,11 @@
 import { Inertia } from '@inertiajs/inertia';
 import { Link } from '@inertiajs/inertia-vue3';
 import sanitizeHtml from 'sanitize-html';
-import { ref, computed, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import LoginBox from '../../Components/Fediverse/LoginBox.vue';
 import AccountsBox from '../../Components/Fediverse/AccountsBox.vue';
 import AppLayout from '../../Layouts/AppLayout.vue';
-import { accounts } from '@/Fediverse/accounts';
+import { accounts, getClient } from '@/Fediverse/accounts';
 
 const props = defineProps({
   account: Object,
@@ -111,12 +111,37 @@ onUnmounted(Inertia.on('navigate', async () => {
   updatedAccount.value = data;
 }));
 
+const currentUser = computed(() => accounts.value[0]);
 const loggedIn = computed(() => accounts.value.length > 0);
 const following = ref(false);
 const followLoading = ref(false);
 
-function follow() {
-  //
+watch([() => props.account, currentUser], () => {
+  following.value = false;
+  checkFollowing();
+});
+
+onMounted(checkFollowing);
+
+async function checkFollowing() {
+  if (currentUser.value && props.account) {
+    let client = getClient(currentUser.value);
+    following.value = await client.isFollowing(account.value.handle);
+  }
+}
+
+async function follow() {
+  followLoading.value = true;
+
+  try {
+    let client = getClient(currentUser.value);
+    await client.follow(account.value.handle);
+    following.value = true;
+  } catch (e) {
+    //
+  }
+
+  followLoading.value = false;
 }
 
 function formatNumber(number) {

@@ -5,6 +5,32 @@ export default class MastodonApi
     this._token = token;
   }
 
+  lookup(handle) {
+    return this.get('api/v1/accounts/lookup', { acct: handle });;
+  }
+
+  relationships(ids) {
+    let params = new URLSearchParams;
+    ids.forEach(id => params.append('id[]', id));
+
+    return this.get(`api/v1/accounts/relationships?${params}`);
+  }
+
+  async isFollowing(handle) {
+    let remoteAccount = await this.lookup(handle);
+    let [relationship] = await this.relationships([remoteAccount.id]);
+
+    return relationship?.following;
+  }
+
+  async follow(handle) {
+    let remoteAccount = await this.lookup(handle);
+
+    await this.post(`api/v1/accounts/${remoteAccount.id}/follow`);
+  }
+
+  // Low-level API client methods
+
   get headers() {
     let headers = {
       'Accept': 'application/json',
@@ -22,7 +48,12 @@ export default class MastodonApi
     return `https://${this._domain}/${path}`;
   }
 
-  get(path) {
+  get(path, query = null) {
+    if (query) {
+      query = new URLSearchParams(query);
+      path += `?${query}`
+    }
+
     return this.request('get', path);
   }
 
