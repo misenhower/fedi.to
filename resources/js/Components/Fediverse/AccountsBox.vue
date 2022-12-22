@@ -12,7 +12,7 @@
       <!-- Main content -->
       <div class="flex-1 space-y-1">
         <div class="flex">
-          <a href="accountLogin.account.profile_url" target="_blank" class="group" rel="noopener nofollow">
+          <a :href="account.data.url" target="_blank" class="group" rel="noopener nofollow">
             <div>
               <div class="text-lg font-bold text-cyan-100 group-hover:text-white">
                 {{ account.data.display_name }}
