@@ -1,7 +1,9 @@
 <template>
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-lg py-10">
-      <h1 class="text-4xl font-semibold">Fedi.to</h1>
+      <Link href="/">
+        <h1 class="text-4xl font-semibold">Fedi.to</h1>
+      </Link>
 
       <div class="my-6 p-2 rounded-lg bg-indigo-800">
         <div class="flex gap-2">
@@ -21,7 +23,7 @@
                     {{ account.display_name }}
                   </div>
                   <div class="text-sm text-indigo-300 group-hover:text-indigo-100 group-hover:underline">
-                    @{{ account.handle }}
+                    @{{ account.display_handle }}
                   </div>
                 </div>
               </a>
