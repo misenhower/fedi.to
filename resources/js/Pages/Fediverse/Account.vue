@@ -80,12 +80,24 @@
 </style>
 
 <script setup>
+import { Inertia } from '@inertiajs/inertia';
+import { Link } from '@inertiajs/inertia-vue3';
 import sanitizeHtml from 'sanitize-html';
-import { ref } from 'vue';
+import { ref, computed, onUnmounted } from 'vue';
 
 const props = defineProps({
   account: Object,
 });
+
+const updatedAccount = ref(null);
+const account = computed(() => updatedAccount.value || props.account);
+
+// Re-fetch the account to look for updated data
+onUnmounted(Inertia.on('navigate', async () => {
+  let response = await fetch(`/api/accounts/${account.value.id}`);
+  let { data } = await response.json();
+  updatedAccount.value = data;
+}));
 
 const loggedIn = ref(true);
 const following = ref(false);
