@@ -19,11 +19,15 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { onMounted } from 'vue';
 import { finishLogin } from '@/Fediverse/accounts';
+import delay from 'delay';
 
 onMounted(async () => {
   let params = new URLSearchParams(window.location.search);
   let code = params.get('code');
   let state = params.get('state');
+
+  // Wait for replication delay
+  await delay(1000);
 
   let { returnUrl } = await finishLogin(code, state);
 
