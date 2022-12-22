@@ -24,6 +24,8 @@
         "@fortawesome/fontawesome-svg-core": "^6.2.1",
         "@fortawesome/free-solid-svg-icons": "^6.2.1",
         "@fortawesome/vue-fontawesome": "^3.0.2",
+        "@vueuse/core": "^9.8.2",
+        "delay": "^5.0.0",
         "sanitize-html": "^2.8.1"
     }
 }

@@ -19,3 +19,5 @@ use Inertia\Inertia;
 Route::inertia('/', 'Welcome');
 
 Route::get('@{username}@{domain}', [AccountController::class, 'show']);
+
+Route::inertia('oauth/mastodon/return', 'Fediverse/Auth/Return');
