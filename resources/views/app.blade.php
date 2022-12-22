@@ -6,6 +6,12 @@
 
         <title inertia>{{ config('app.name', 'Fedi.to') }}</title>
 
+        @isset ($og)
+        <meta property="og:title" content="{{ $og['title'] }}">
+        <meta property="og:description" content="{{ $og['description'] }}">
+        <meta property="og:image" content="{{ $og['image'] }}">
+        @endisset
+
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
 

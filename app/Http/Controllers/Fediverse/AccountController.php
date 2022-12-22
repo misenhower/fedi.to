@@ -15,6 +15,12 @@ class AccountController extends Controller
 
         return Inertia::render('Fediverse/Account', [
             'account' => $account,
+        ])->withViewData([
+            'og' => [
+                'title' => "{$account->display_name} ({$account->display_handle}) / Fedi.to",
+                'description' => $account->summary,
+                'image' => $account->avatar_url,
+            ],
         ]);
     }
 }
