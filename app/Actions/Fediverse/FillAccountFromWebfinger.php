@@ -43,7 +43,7 @@ class FillAccountFromWebfinger
 
     private function getData(string $url): array
     {
-        $response = Http::acceptJson()
+        $response = Http::accept('application/activity+json')
             ->get($url)
             ->throw();
 
